@@ -369,6 +369,9 @@
             <button onclick="window.print()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-lg font-bold shadow-md flex items-center justify-center transition-all">
                 <i class="fa-solid fa-print mr-2"></i> Imprimir Reporte
             </button>
+            <button onclick="shareChecklist()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-lg font-bold shadow-md flex items-center justify-center transition-all">
+                <i class="fa-solid fa-share-nodes mr-2"></i> Compartir Progreso
+            </button>
             <button onclick="resetChecks()" class="bg-white border border-slate-300 hover:bg-slate-50 text-slate-600 px-8 py-3 rounded-lg font-bold flex items-center justify-center transition-all">
                 <i class="fa-solid fa-rotate mr-2"></i> Reiniciar Checklist
             </button>
@@ -411,7 +414,53 @@
             localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
         }
 
+        function encodeStateToURL() {
+            const data = {
+                checkboxes: Array.from(checkboxes).map(cb => cb.checked),
+                textareas: Array.from(textareas).map(ta => ta.value)
+            };
+            return btoa(JSON.stringify(data));
+        }
+
+        function decodeStateFromURL(encoded) {
+            try {
+                const decoded = atob(encoded);
+                return JSON.parse(decoded);
+            } catch (e) {
+                console.error('Error decoding URL state:', e);
+                return null;
+            }
+        }
+
         function loadData() {
+            // First check if there's state in the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const sharedState = urlParams.get('state');
+            
+            if (sharedState) {
+                const data = decodeStateFromURL(sharedState);
+                if (data) {
+                    // Restore checkboxes
+                    checkboxes.forEach((cb, index) => {
+                        if (data.checkboxes[index] !== undefined) {
+                            cb.checked = data.checkboxes[index];
+                        }
+                    });
+                    
+                    // Restore textareas
+                    textareas.forEach((ta, index) => {
+                        if (data.textareas[index] !== undefined) {
+                            ta.value = data.textareas[index];
+                        }
+                    });
+                    
+                    // Save to localStorage for future visits
+                    saveData();
+                    return;
+                }
+            }
+            
+            // If no URL state, load from localStorage
             const saved = localStorage.getItem(STORAGE_KEY);
             if (saved) {
                 const data = JSON.parse(saved);
@@ -430,6 +479,27 @@
                     }
                 });
             }
+        }
+
+        function shareChecklist() {
+            const stateCode = encodeStateToURL();
+            const baseURL = window.location.origin + window.location.pathname;
+            const shareURL = baseURL + '?state=' + stateCode;
+            
+            // Try to copy to clipboard
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(shareURL).then(() => {
+                    alert('¡URL copiada al portapapeles!\n\nComparte este enlace para que otros vean tu progreso actual.');
+                }).catch(() => {
+                    showShareDialog(shareURL);
+                });
+            } else {
+                showShareDialog(shareURL);
+            }
+        }
+
+        function showShareDialog(url) {
+            const dialog = prompt('Copia esta URL para compartir tu progreso:', url);
         }
 
         checkboxes.forEach(cb => {
