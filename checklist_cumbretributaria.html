@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist: Cumbre Tributaria 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .progress-bar {
+            transition: width 0.5s ease-in-out;
+        }
+        .task-item:hover {
+            background-color: #f9fafb;
+        }
+        input[type="checkbox"]:checked + span {
+            text-decoration: line-through;
+            color: #9ca3af;
+        }
+        .category-card {
+            break-inside: avoid;
+        }
+        
+        @media print {
+            body {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+            .category-card {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            button {
+                display: none;
+            }
+            .columns-1 {
+                columns: 2;
+                column-gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen pb-12 font-sans text-slate-900">
+
+    <!-- Header -->
+    <header class="bg-indigo-900 text-white py-8 px-4 shadow-lg mb-8">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h1 class="text-3xl font-bold italic tracking-tight">Cumbre Tributaria 2026</h1>
+                    <p class="text-indigo-200 mt-1">
+                        <i class="fa-solid fa-calendar-days mr-2"></i> 9 de enero de 2026 | 
+                        <i class="fa-solid fa-location-dot mx-2"></i> Hotel Zaracay
+                    </p>
+                </div>
+                <div class="bg-indigo-800 p-4 rounded-lg border border-indigo-700 w-full md:w-auto">
+                    <div class="text-sm uppercase tracking-wider text-indigo-300 font-semibold mb-1 text-center">Progreso General</div>
+                    <div class="w-full md:w-64 bg-indigo-950 rounded-full h-4 overflow-hidden">
+                        <div id="mainProgressBar" class="progress-bar bg-emerald-400 h-full w-0"></div>
+                    </div>
+                    <div class="text-right mt-1 text-xs font-mono" id="progressText">0% completado</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4">
+        
+        <!-- Estado de Registros -->
+        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-8 rounded-r-lg shadow-sm">
+            <div class="flex items-center">
+                <i class="fa-solid fa-users text-blue-600 text-xl mr-3"></i>
+                <p class="text-blue-800 font-semibold">
+                    <strong>1,172 registrados</strong> para el evento
+                </p>
+            </div>
+        </div>
+
+        <div class="columns-1 md:columns-2 gap-6 space-y-6">
+
+            <!-- Sección 1: Equipamiento -->
+            <section class="category-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-200">
+                <div class="bg-slate-800 p-4 flex items-center justify-between text-white">
+                    <h3 class="font-bold"><i class="fa-solid fa-tv mr-2 text-indigo-400"></i> Visual y Sonido</h3>
+                    <span class="text-xs font-mono opacity-70 category-count">0/7</span>
+                </div>
+                <div class="p-4 space-y-3">
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Pantalla LED (3x2m)</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">4 Pantallas Verticales</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Técnico de Visuales</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Amplificación Hotel (Hotel Zaracay)</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Mezcladora Digital</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Microfonía (4 de mano + 1 diadema)</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Botes LED (Iluminación)</span>
+                    </label>
+                    <textarea placeholder="Observaciones extras..." class="w-full mt-2 p-2 text-sm border rounded bg-slate-50 border-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500 h-16"></textarea>
+                </div>
+            </section>
+
+            <!-- Sección 2: Catering -->
+            <section class="category-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-200">
+                <div class="bg-slate-800 p-4 flex items-center justify-between text-white">
+                    <h3 class="font-bold"><i class="fa-solid fa-mug-hot mr-2 text-indigo-400"></i> Catering y Montaje</h3>
+                    <span class="text-xs font-mono opacity-70 category-count">0/5</span>
+                </div>
+                <div class="p-4 space-y-3">
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer italic text-orange-600">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-orange-300 text-orange-600 focus:ring-orange-500 mr-3">
+                        <span class="flex-grow">Elegir Bocaditos ($1 c/u) <i class="fa-solid fa-clock-rotate-left ml-1 text-xs"></i></span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Estación de Hidratación</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Sillas Vestidas (500)</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Podium</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Pedestal</span>
+                    </label>
+                    <textarea placeholder="Observaciones extras..." class="w-full mt-2 p-2 text-sm border rounded bg-slate-50 border-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500 h-16"></textarea>
+                </div>
+            </section>
+
+            <!-- Sección 3: Personal -->
+            <section class="category-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-200">
+                <div class="bg-slate-800 p-4 flex items-center justify-between text-white">
+                    <h3 class="font-bold"><i class="fa-solid fa-users mr-2 text-indigo-400"></i> Personal (Staff)</h3>
+                    <span class="text-xs font-mono opacity-70 category-count">0/7</span>
+                </div>
+                <div class="p-4 space-y-3">
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow text-green-700 font-semibold">Presentador (Tarifa $130)</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer italic text-orange-600">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-orange-300 text-orange-600 focus:ring-orange-500 mr-3">
+                        <span class="flex-grow">Guión Técnico del Evento <i class="fa-solid fa-scroll ml-1 text-xs"></i></span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer italic text-orange-600">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-orange-300 text-orange-600 focus:ring-orange-500 mr-3">
+                        <span class="flex-grow">Contratar persona para "Persy" <i class="fa-solid fa-paw ml-1 text-xs"></i></span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Personal Recepción</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Personal Grabación</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Personal Backstage</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Personal Entrevistas</span>
+                    </label>
+                    <textarea placeholder="Observaciones extras..." class="w-full mt-2 p-2 text-sm border rounded bg-slate-50 border-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500 h-16"></textarea>
+                </div>
+            </section>
+
+            <!-- Sección 4: Seguridad y Parqueaderos -->
+            <section class="category-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-200">
+                <div class="bg-slate-800 p-4 flex items-center justify-between text-white">
+                    <h3 class="font-bold"><i class="fa-solid fa-shield-halved mr-2 text-indigo-400"></i> Seguridad y Parqueaderos</h3>
+                    <span class="text-xs font-mono opacity-70 category-count">0/6</span>
+                </div>
+                <div class="p-4 space-y-3">
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow font-semibold text-red-700">Contratar Seguridad Privada</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Personal de Seguridad en Entradas</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Control de Acceso Parqueadero</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Señalización Parqueadero Invitados</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Parqueos VIP Reservados</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer italic text-orange-600">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-orange-300 text-orange-600 focus:ring-orange-500 mr-3">
+                        <span class="flex-grow">Coordinar con Hotel capacidad parqueadero</span>
+                    </label>
+                    <textarea placeholder="Observaciones extras..." class="w-full mt-2 p-2 text-sm border rounded bg-slate-50 border-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500 h-16"></textarea>
+                </div>
+            </section>
+
+            <!-- Sección 5: Publicidad -->
+            <section class="category-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-200">
+                <div class="bg-slate-800 p-4 flex items-center justify-between text-white">
+                    <h3 class="font-bold"><i class="fa-solid fa-bullhorn mr-2 text-indigo-400"></i> Elementos Publicitarios</h3>
+                    <span class="text-xs font-mono opacity-70 category-count">0/8</span>
+                </div>
+                <div class="p-4 space-y-3">
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">2 Backings</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer text-green-700 font-medium">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Roll ups (Aprobados ✓)</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer text-green-700 font-medium">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Cuadernillos 1000 (Aprobados - Pendiente Imprimir)</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer text-indigo-700 font-medium">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">100 Libretas JR (VIP)</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">500 Esferos y 500 Flyers</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Tarjetas de Asesores (500)</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Diseño Certificado Digital</span>
+                    </label>
+                    <textarea placeholder="Observaciones extras..." class="w-full mt-2 p-2 text-sm border rounded bg-slate-50 border-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500 h-16"></textarea>
+                </div>
+            </section>
+
+             <!-- Sección 6: Ponentes -->
+             <section class="category-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-200">
+                <div class="bg-slate-800 p-4 flex items-center justify-between text-white">
+                    <h3 class="font-bold"><i class="fa-solid fa-microphone-lines mr-2 text-indigo-400"></i> Ponentes y Contenido</h3>
+                    <span class="text-xs font-mono opacity-70 category-count">0/5</span>
+                </div>
+                <div class="p-4 space-y-3">
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">4 Ponentes Confirmados</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Plantilla unificada de PPT</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Temas de cada ponente</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer text-blue-600 font-medium">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Solicitar Hojas de Vida (CV)</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Artes publicitarios Ponentes</span>
+                    </label>
+                    <textarea placeholder="Observaciones extras..." class="w-full mt-2 p-2 text-sm border rounded bg-slate-50 border-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500 h-16"></textarea>
+                </div>
+            </section>
+
+            <!-- Sección 7: Hospedaje y Movilización -->
+            <section class="category-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-200">
+                <div class="bg-slate-800 p-4 flex items-center justify-between text-white">
+                    <h3 class="font-bold"><i class="fa-solid fa-bed mr-2 text-indigo-400"></i> Hospedaje y Movilización</h3>
+                    <span class="text-xs font-mono opacity-70 category-count">0/7</span>
+                </div>
+                <div class="p-4 space-y-3">
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer font-semibold text-purple-700">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Reservar Habitaciones Ponentes</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Confirmar fechas de llegada/salida</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Transporte Taxi-Hotel</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Vehículos para traslados locales</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer italic text-orange-600">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-orange-300 text-orange-600 focus:ring-orange-500 mr-3">
+                        <span class="flex-grow">Coordinar itinerario de viaje</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Asignar contacto/asistente local</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Confirmar alimentación incluida</span>
+                    </label>
+                    <textarea placeholder="Observaciones extras..." class="w-full mt-2 p-2 text-sm border rounded bg-slate-50 border-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500 h-16"></textarea>
+                </div>
+            </section>
+
+            <!-- Sección 8: Protocolo -->
+            <section class="category-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-200">
+                <div class="bg-slate-800 p-4 flex items-center justify-between text-white">
+                    <h3 class="font-bold"><i class="fa-solid fa-clapperboard mr-2 text-indigo-400"></i> Producción y Cierre</h3>
+                    <span class="text-xs font-mono opacity-70 category-count">0/6</span>
+                </div>
+                <div class="p-4 space-y-3">
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer font-mono text-xs text-indigo-800">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Timers listos (5 min / 20 min break)</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Video Perseo Bienvenida</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow">Videos Totems / Pantallas (8 clips)</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow font-bold">Placa para Contadores</span>
+                    </label>
+                    <label class="task-item flex items-center p-2 rounded transition-colors cursor-pointer">
+                        <input type="checkbox" class="task-check w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        <span class="flex-grow font-bold">Premio para Sorteo</span>
+                    </label>
+                    <textarea placeholder="Observaciones extras..." class="w-full mt-2 p-2 text-sm border rounded bg-slate-50 border-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500 h-16"></textarea>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="mt-12 flex flex-col md:flex-row justify-center gap-4">
+            <button onclick="window.print()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-lg font-bold shadow-md flex items-center justify-center transition-all">
+                <i class="fa-solid fa-print mr-2"></i> Imprimir Reporte
+            </button>
+            <button onclick="resetChecks()" class="bg-white border border-slate-300 hover:bg-slate-50 text-slate-600 px-8 py-3 rounded-lg font-bold flex items-center justify-center transition-all">
+                <i class="fa-solid fa-rotate mr-2"></i> Reiniciar Checklist
+            </button>
+        </div>
+    </main>
+
+    <footer class="mt-12 text-center text-slate-400 text-sm italic">
+        "Organización impecable para el éxito del evento." - Equipo de Producción
+    </footer>
+
+    <script>
+        const checkboxes = document.querySelectorAll('.task-check');
+        const textareas = document.querySelectorAll('textarea');
+        const mainBar = document.getElementById('mainProgressBar');
+        const progressText = document.getElementById('progressText');
+        const STORAGE_KEY = 'checklist_cumbretributaria_2026';
+
+        function updateProgress() {
+            const total = checkboxes.length;
+            const checked = document.querySelectorAll('.task-check:checked').length;
+            const percentage = Math.round((checked / total) * 100);
+            
+            mainBar.style.width = percentage + '%';
+            progressText.innerText = percentage + '% completado';
+
+            // Update category counters
+            document.querySelectorAll('.category-card').forEach(card => {
+                const cardChecks = card.querySelectorAll('.task-check').length;
+                const cardChecked = card.querySelectorAll('.task-check:checked').length;
+                card.querySelector('.category-count').innerText = `${cardChecked}/${cardChecks}`;
+            });
+        }
+
+        function saveData() {
+            const data = {
+                checkboxes: Array.from(checkboxes).map(cb => cb.checked),
+                textareas: Array.from(textareas).map(ta => ta.value),
+                lastUpdated: new Date().toISOString()
+            };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        function loadData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                const data = JSON.parse(saved);
+                
+                // Restore checkboxes
+                checkboxes.forEach((cb, index) => {
+                    if (data.checkboxes[index] !== undefined) {
+                        cb.checked = data.checkboxes[index];
+                    }
+                });
+                
+                // Restore textareas
+                textareas.forEach((ta, index) => {
+                    if (data.textareas[index] !== undefined) {
+                        ta.value = data.textareas[index];
+                    }
+                });
+            }
+        }
+
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', () => {
+                updateProgress();
+                saveData();
+            });
+        });
+
+        textareas.forEach(ta => {
+            ta.addEventListener('input', saveData);
+        });
+
+        function resetChecks() {
+            if(confirm('¿Seguro que deseas limpiar todo el progreso?')) {
+                checkboxes.forEach(cb => cb.checked = false);
+                textareas.forEach(ta => ta.value = '');
+                updateProgress();
+                saveData();
+            }
+        }
+
+        // Load saved data and update progress
+        loadData();
+        updateProgress();
+    </script>
+</body>
+</html>
