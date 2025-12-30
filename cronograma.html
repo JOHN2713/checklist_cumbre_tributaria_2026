@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronograma - Cumbre Tributaria</title>
+    <style>
+        :root {
+            --primary: #1e3a8a; /* Azul corporativo */
+            --secondary: #d97706; /* Dorado/Naranja para ponentes estrella */
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --white: #ffffff;
+            --accent: #64748b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background: var(--primary);
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 { margin: 0; font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        p.subtitle { margin-top: 10px; opacity: 0.9; font-size: 1.1rem; }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        /* Línea vertical central */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #cbd5e1;
+            border-radius: 2px;
+        }
+
+        .event-card {
+            position: relative;
+            margin-left: 50px;
+            margin-bottom: 25px;
+            background: var(--white);
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--primary);
+            transition: transform 0.2s;
+        }
+
+        .event-card:hover {
+            transform: translateX(5px);
+        }
+
+        /* Ponente Estrella Style */
+        .event-card.star {
+            border-left: 5px solid var(--secondary);
+            background: #fffbeb;
+        }
+
+        /* Break Style */
+        .event-card.break {
+            border-left: 5px solid #10b981;
+            background: #f0fdf4;
+        }
+
+        .time {
+            font-weight: bold;
+            color: var(--primary);
+            display: block;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .star .time { color: var(--secondary); }
+
+        .title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .description {
+            font-size: 0.95rem;
+            color: var(--accent);
+            margin-top: 5px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .badge-ad { background: #fee2e2; color: #b91c1c; }
+        .badge-star { background: #fef3c7; color: #92400e; }
+
+        /* Iconos de la línea */
+        .dot {
+            position: absolute;
+            left: -38px;
+            top: 15px;
+            width: 16px;
+            height: 16px;
+            background: var(--primary);
+            border: 3px solid var(--white);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .star .dot { background: var(--secondary); }
+
+        /* Comentarios */
+        .comments-section {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .comment-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 60px;
+            transition: border-color 0.2s;
+        }
+
+        .comment-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .comment-input::placeholder {
+            color: #94a3b8;
+        }
+
+        /* Botones de Acción */
+        .action-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .action-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+        }
+
+        .action-btn.share {
+            background: #10b981;
+        }
+
+        .action-btn.checklist {
+            background: #6366f1;
+        }
+
+        @media print {
+            .action-buttons, .comment-input { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Cumbre Tributaria</h1>
+        <p class="subtitle">Agenda Oficial del Evento</p>
+    </header>
+
+    <div class="timeline">
+
+        <div class="event-card">
+            <div class="dot"></div>
+            <span class="time">14:00 - 05 min</span>
+            <p class="title">Cuenta Regresiva</p>
+            <p class="description">Timer de inicio de evento.</p>
+            <div class="comments-section">
+                <textarea class="comment-input" placeholder="Agregar comentarios o notas sobre esta actividad..."></textarea>
+            </div>
+        </div>
+
+        <div class="event-card">
+            <div class="dot"></div>
+            <span class="time">14:05 - 01 min</span>
+            <p class="title">Video de Bienvenida</p>
+            <p class="description">Apertura audiovisual de la cumbre.</p>
+            <div class="comments-section">
+                <textarea class="comment-input" placeholder="Agregar comentarios o notas sobre esta actividad..."></textarea>
+            </div>
+        </div>
+
+        <div class="event-card">
+            <div class="dot"></div>
+            <span class="time">14:06 - 03 min</span>
+            <p class="title">Palabras del Presentador</p>
+            <p class="description">Introducción y bienvenida formal.</p>
+            <div class="comments-section">
+                <textarea class="comment-input" placeholder="Agregar comentarios o notas sobre esta actividad..."></textarea>
+            </div>
+        </div>
+
+        <div class="event-card">
+            <div class="dot"></div>
+            <span class="time">14:09 - 30 min</span>
+            <p class="title">Ponente: Contador David Echeverría</p>
+            <p class="description">Reseña del ponente y desarrollo del tema principal.</p>
+            <div class="comments-section">
+                <textarea class="comment-input" placeholder="Agregar comentarios o notas sobre esta actividad..."></textarea>
+            </div>
+        </div>
+
+        <div class="event-card">
+            <div class="dot"></div>
+            <span class="time">14:39 - 05 min</span>
+            <p class="title">Ronda de Preguntas y Respuestas</p>
+            <p class="description">Espacio interactivo con David Echeverría.</p>
+            <div class="comments-section">
+                <textarea class="comment-input" placeholder="Agregar comentarios o notas sobre esta actividad..."></textarea>
+            </div>
+        </div>
+
+        <div class="event-card">
+            <div class="dot"></div>
+            <span class="time">14:44 - 03 min</span>
+            <p class="title">Mención Publicitaria</p>
+            <p class="description">Palabras del presentador y anuncios de patrocinadores.</p>
+            <span class="badge badge-ad">Publicidad</span>
+            <div class="comments-section">
+                <textarea class="comment-input" placeholder="Agregar comentarios o notas sobre esta actividad..."></textarea>
+            </div>
+        </div>
+
+        <div class="event-card">
+            <div class="dot"></div>
+            <span class="time">14:47 - 25 min</span>
+            <p class="title">Ponente: Pendiente</p>
+            <p class="description">Por confirmar - Reseña y presentación técnica.</p>
+            <div class="comments-section">
+                <textarea class="comment-input" placeholder="Agregar comentarios o notas sobre esta actividad..."></textarea>
+            </div>
+        </div>
+
+        <div class="event-card">
+            <div class="dot"></div>
+            <span class="time">15:12 - 05 min</span>
+            <p class="title">Q&A Ponente</p>
+            <p class="description">Espacio para dudas de los asistentes.</p>
+            <div class="comments-section">
+                <textarea class="comment-input" placeholder="Agregar comentarios o notas sobre esta actividad..."></textarea>
+            </div>
+        </div>
+
+        <div class="event-card">
+            <div class="dot"></div>
+            <span class="time">15:17 - 05 min</span>
+            <p class="title">Mención Publicitaria</p>
+            <p class="description">Espacio publicitario por el presentador.</p>
+            <span class="badge badge-ad">Publicidad</span>
+            <div class="comments-section">
+                <textarea class="comment-input" placeholder="Agregar comentarios o notas sobre esta actividad..."></textarea>
+            </div>
+        </div>
+
+        <div class="event-card star">
+            <div class="dot"></div>
+            <span class="time">15:22 - 03 min</span>
+            <p class="title">Reseña: Jorge Ron</p>
+            <p class="description">Introducción al ponente estrella.</p>
+            <span class="badge badge-star">Ponente Estrella</span>
+            <div class="comments-section">
+                <textarea class="comment-input" placeholder="Agregar comentarios o notas sobre esta actividad..."></textarea>
+            </div>
+        </div>
+
+        <div class="event-card star">
+            <div class="dot"></div>
+            <span class="time">15:25 - 1 hora</span>
+            <p class="title">Magister Jorge Ron - Presentación</p>
+            <p class="description">Ingreso y ponencia magistral.</p>
+            <div class="comments-section">
+                <textarea class="comment-input" placeholder="Agregar comentarios o notas sobre esta actividad..."></textarea>
+            </div>
+        </div>
+
+        <div class="event-card break">
+            <div class="dot"></div>
+            <span class="time">16:25 - 20 min</span>
+            <p class="title">Break / Coffee Break</p>
+            <p class="description">Receso y networking.</p>
+            <div class="comments-section">
+                <textarea class="comment-input" placeholder="Agregar comentarios o notas sobre esta actividad..."></textarea>
+            </div>
+        </div>
+
+        <div class="event-card">
+            <div class="dot"></div>
+            <span class="time">16:45 - 02 min</span>
+            <p class="title">Reincorporación</p>
+            <p class="description">El presentador llama a los asistentes a sus lugares.</p>
+            <div class="comments-section">
+                <textarea class="comment-input" placeholder="Agregar comentarios o notas sobre esta actividad..."></textarea>
+            </div>
+        </div>
+
+        <div class="event-card">
+            <div class="dot"></div>
+            <span class="time">16:47 - 03 min</span>
+            <p class="title">Reseña: Soy Actuario</p>
+            <p class="description">Introducción al tercer bloque.</p>
+            <div class="comments-section">
+                <textarea class="comment-input" placeholder="Agregar comentarios o notas sobre esta actividad..."></textarea>
+            </div>
+        </div>
+
+        <div class="event-card">
+            <div class="dot"></div>
+            <span class="time">16:50 - 30 min</span>
+            <p class="title">Presentación: Soy Actuario</p>
+            <p class="description">Exposición técnica de "Soy Actuario".</p>
+            <div class="comments-section">
+                <textarea class="comment-input" placeholder="Agregar comentarios o notas sobre esta actividad..."></textarea>
+            </div>
+        </div>
+
+        <div class="event-card">
+            <div class="dot"></div>
+            <span class="time">17:20 - 05 min</span>
+            <p class="title">Q&A Soy Actuario</p>
+            <p class="description">Espacio de preguntas.</p>
+            <div class="comments-section">
+                <textarea class="comment-input" placeholder="Agregar comentarios o notas sobre esta actividad..."></textarea>
+            </div>
+        </div>
+
+        <div class="event-card">
+            <div class="dot"></div>
+            <span class="time">17:25 - 05 min</span>
+            <p class="title">Mención Publicitaria</p>
+            <p class="description">Espacio publicitario final.</p>
+            <span class="badge badge-ad">Publicidad</span>
+            <div class="comments-section">
+                <textarea class="comment-input" placeholder="Agregar comentarios o notas sobre esta actividad..."></textarea>
+            </div>
+        </div>
+
+        <div class="event-card star">
+            <div class="dot"></div>
+            <span class="time">17:33 - 1 hora</span>
+            <p class="title">Jorge Ron - Ejercicio Práctico</p>
+            <p class="description">Taller aplicado y dinámica grupal.</p>
+            <div class="comments-section">
+                <textarea class="comment-input" placeholder="Agregar comentarios o notas sobre esta actividad..."></textarea>
+            </div>
+        </div>
+
+        <div class="event-card">
+            <div class="dot"></div>
+            <span class="time">18:43 - 10 min</span>
+            <p class="title">Gran Sorteo</p>
+            <p class="description">Sorteo con los asistentes y cierre del evento.</p>
+            <div class="comments-section">
+                <textarea class="comment-input" placeholder="Agregar comentarios o notas sobre esta actividad..."></textarea>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Botones de Acción Flotantes -->
+<div class="action-buttons">
+    <button class="action-btn checklist" onclick="window.location.href='index.html'">
+        ✓ Ver Checklist
+    </button>
+    <button class="action-btn share" onclick="shareSchedule()">
+        ↗ Compartir Cronograma
+    </button>
+</div>
+
+<script>
+    const commentInputs = document.querySelectorAll('.comment-input');
+    const STORAGE_KEY = 'cronograma_cumbretributaria_2026';
+
+    function saveData() {
+        const data = {
+            comments: Array.from(commentInputs).map(input => input.value),
+            lastUpdated: new Date().toISOString()
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function encodeStateToURL() {
+        const data = {
+            comments: Array.from(commentInputs).map(input => input.value)
+        };
+        return btoa(encodeURIComponent(JSON.stringify(data)));
+    }
+
+    function decodeStateFromURL(encoded) {
+        try {
+            const decoded = decodeURIComponent(atob(encoded));
+            return JSON.parse(decoded);
+        } catch (e) {
+            console.error('Error decoding URL state:', e);
+            return null;
+        }
+    }
+
+    function loadData() {
+        // First check if there's state in the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const sharedState = urlParams.get('state');
+        
+        if (sharedState) {
+            const data = decodeStateFromURL(sharedState);
+            if (data) {
+                // Restore comments
+                commentInputs.forEach((input, index) => {
+                    if (data.comments[index] !== undefined) {
+                        input.value = data.comments[index];
+                    }
+                });
+                
+                // Save to localStorage for future visits
+                saveData();
+                return;
+            }
+        }
+        
+        // If no URL state, load from localStorage
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+            const data = JSON.parse(saved);
+            
+            // Restore comments
+            commentInputs.forEach((input, index) => {
+                if (data.comments[index] !== undefined) {
+                    input.value = data.comments[index];
+                }
+            });
+        }
+    }
+
+    function shareSchedule() {
+        const stateCode = encodeStateToURL();
+        const baseURL = window.location.origin + window.location.pathname;
+        const shareURL = baseURL + '?state=' + stateCode;
+        
+        // Try to copy to clipboard
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(shareURL).then(() => {
+                alert('¡URL copiada al portapapeles!\n\nComparte este enlace para que otros vean tus comentarios del cronograma.');
+            }).catch(() => {
+                showShareDialog(shareURL);
+            });
+        } else {
+            showShareDialog(shareURL);
+        }
+    }
+
+    function showShareDialog(url) {
+        prompt('Copia esta URL para compartir tu cronograma:', url);
+    }
+
+    // Save data when comments change
+    commentInputs.forEach(input => {
+        input.addEventListener('input', saveData);
+    });
+
+    // Load saved data on page load
+    loadData();
+</script>
+
+</body>
+</html>
